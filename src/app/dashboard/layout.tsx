@@ -11,7 +11,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LayoutGrid, LogOut, Settings } from "lucide-react";
+import { LayoutGrid, LogOut, Settings, Building } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 
@@ -31,6 +31,14 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 <Link href="/dashboard">
                   <LayoutGrid />
                   Dashboard
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Organizations">
+                <Link href="/dashboard/organizations">
+                  <Building />
+                  Organizations
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
