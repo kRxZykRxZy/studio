@@ -9,11 +9,15 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarProvider,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LayoutGrid, LogOut, Settings, Building } from "lucide-react";
+import { LayoutGrid, LogOut, Settings, Building, User, KeyRound } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
@@ -42,13 +46,35 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Settings">
-                <Link href="#">
-                  <Settings />
-                  Settings
-                </Link>
-              </SidebarMenuButton>
+            <SidebarMenuItem asChild>
+              <Collapsible>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton tooltip="Settings">
+                    <Settings />
+                    Settings
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent asChild>
+                  <SidebarMenuSub>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton asChild>
+                        <Link href="/dashboard/settings/profile">
+                          <User />
+                          Profile
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton asChild>
+                        <Link href="/dashboard/settings/account">
+                          <KeyRound />
+                          Account
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </Collapsible>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
