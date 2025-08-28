@@ -8,17 +8,20 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
+  updateProfile,
 } from "firebase/auth";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { app } from "@/lib/firebase";
 import { useRouter, usePathname } from "next/navigation";
 
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string, pass: string) => Promise<any>;
-  signup: (email: string, pass: string) => Promise<any>;
+  signup: (email: string, pass: string, username: string, dob: Date) => Promise<any>;
   logout: () => Promise<any>;
 }
 
@@ -57,8 +60,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return signInWithEmailAndPassword(auth, email, pass);
   };
 
-  const signup = (email: string, pass: string) => {
-    return createUserWithEmailAndPassword(auth, email, pass);
+  const signup = async (email: string, pass: string, username: string, dob: Date) => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+    const user = userCredential.user;
+    
+    await updateProfile(user, {
+      displayName: username,
+    });
+
+    await setDoc(doc(db, "users", user.uid), {
+      username: username,
+      email: email,
+      dob: dob,
+    });
+
+    return userCredential;
   };
 
   const logout = () => {
