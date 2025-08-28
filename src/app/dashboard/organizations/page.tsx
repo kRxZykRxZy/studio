@@ -5,6 +5,7 @@ const organizations = [
   {
     name: "Innovate Inc.",
     description: "Dedicated to pushing the boundaries of technology and innovation.",
+    logo: "https://picsum.photos/seed/logo1/200/200",
     members: [
       {
         id: 1,
@@ -29,6 +30,7 @@ const organizations = [
     {
     name: "QuantumLeap",
     description: "Exploring the next generation of computing.",
+    logo: "https://picsum.photos/seed/logo2/200/200",
     members: [
       {
         id: 1,

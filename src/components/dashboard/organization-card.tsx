@@ -28,6 +28,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Image from "next/image";
+
 
 type Member = {
   id: number;
@@ -39,23 +41,39 @@ type Member = {
 type Organization = {
   name: string;
   description: string;
+  logo?: string;
   members: Member[];
 };
 
 export function OrganizationCard({ organization }: { organization: Organization }) {
-  const { name, description, members } = organization;
+  const { name, description, members, logo } = organization;
   const visibleMembers = members.slice(0, 3);
   const remainingMembers =
     members.length - visibleMembers.length;
 
   return (
     <Card className="flex flex-col transition-all hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Building className="text-primary" />
-          {name}
-        </CardTitle>
-        <CardDescription>{description}</CardDescription>
+      <CardHeader className="flex flex-row items-start gap-4">
+        {logo ? (
+            <Image
+              src={logo}
+              alt={`${name} logo`}
+              width={48}
+              height={48}
+              className="rounded-lg border"
+              data-ai-hint="logo"
+            />
+        ) : (
+          <div className="p-3 bg-muted rounded-lg border">
+            <Building className="text-primary w-6 h-6" />
+          </div>
+        )}
+        <div className="flex-grow">
+          <CardTitle>
+            {name}
+          </CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </div>
       </CardHeader>
       <CardContent className="flex-grow">
         <div className="flex -space-x-2">
